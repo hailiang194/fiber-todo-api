@@ -1,6 +1,7 @@
 package main
 
 import (
+  "os"
   "github.com/gofiber/fiber/v2"
   "github.com/gofiber/fiber/v2/middleware/logger"
   "github.com/hailiang194/fiber-todo-api/routes"
@@ -39,7 +40,13 @@ func main() {
 
   setupRoutes(app)
 
-  err := app.Listen(":8000")
+  port, ok := os.LookupEnv("PORT")
+
+  if ok == false {
+    port = "8000"
+  }
+
+  err := app.Listen(":"+port)
   if err != nil {
     panic(err)
   }
